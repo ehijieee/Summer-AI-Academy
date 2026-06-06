@@ -82,7 +82,8 @@ h2.big{font-size:clamp(2rem,4.4vw,3rem);margin:14px 0 0}
 
 .mist{background:var(--mist)}
 .tutor{display:flex;gap:30px;align-items:center;flex-wrap:wrap}
-.avatar{width:120px;height:120px;border-radius:26px;background:var(--indigo);color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--display);font-weight:800;font-size:2.6rem;flex-shrink:0}
+.avatar{width:120px;height:120px;border-radius:26px;background:var(--indigo);color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--display);font-weight:800;font-size:2.6rem;flex-shrink:0;overflow:hidden}
+.avatar.photo{background-image:url('ehijie.png');background-repeat:no-repeat;background-size:cover;background-position:50% 14%}
 .tutor .meta{flex:1;min-width:260px}
 .badge{display:inline-block;background:var(--tint);color:var(--indigo);font-family:var(--display);font-weight:600;font-size:.85rem;padding:6px 14px;border-radius:999px;margin-bottom:12px}
 .tutor h3{font-size:1.8rem}
@@ -214,9 +215,7 @@ footer .contact a{margin-left:20px}
   <div class="wrap">
     <p class="eyebrow reveal">Who teaches it</p>
     <div class="tutor reveal" style="margin-top:24px">
-      <!-- To use a real photo: replace this <div class="avatar">EA</div> with:
-           <img src="ehijie.jpg" alt="Ehijie Airewele" style="width:120px;height:120px;border-radius:26px;object-fit:cover;flex-shrink:0"> -->
-      <div class="avatar">EA</div>
+      <div class="avatar photo" role="img" aria-label="Ehijie Airewele"></div>
       <div class="meta">
         <span class="badge">AI Engineer Intern · MTN Nigeria</span>
         <h3>Ehijie Airewele</h3>
