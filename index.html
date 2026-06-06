@@ -26,8 +26,22 @@ section{padding:84px 0}
 .eyebrow{font-family:var(--display);font-weight:600;font-size:.8rem;letter-spacing:.18em;text-transform:uppercase;color:var(--indigo-bright)}
 a{color:inherit}
 
+/* sticky header (top bar + nav stay pinned together on scroll) */
+.sticky-head{position:sticky;top:0;z-index:60}
+
+/* top bar — start date + countdown */
+.topbar{background:var(--indigo-deep);color:#fff;text-align:center;padding:7px 24px;font-family:var(--display);font-weight:600;font-size:.82rem;display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:5px 14px}
+.topbar .start{color:#fff}
+.topbar .start b{color:var(--amber-soft);font-weight:800}
+.topbar .cd{display:inline-flex;gap:6px;align-items:center}
+.topbar .cd .unit{display:inline-flex;align-items:baseline;gap:3px;line-height:1}
+.topbar .cd .unit .num{font-size:.92rem;font-weight:800;color:#fff;font-variant-numeric:tabular-nums}
+.topbar .cd .unit .lbl{font-size:.62rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:#B9B7D6}
+.topbar .cd.done{color:var(--amber-soft)}
+@media(max-width:560px){.topbar{font-size:.75rem;padding:6px 14px;gap:4px 10px}.topbar .cd .unit .num{font-size:.85rem}}
+
 /* nav */
-.nav{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.nav{background:rgba(255,255,255,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
 .nav .wrap{display:flex;align-items:center;justify-content:space-between;height:72px}
 .logo{height:42px;width:auto;display:block}
 .btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--display);font-weight:600;font-size:1rem;text-decoration:none;padding:13px 22px;border-radius:999px;border:0;cursor:pointer;transition:transform .15s ease,box-shadow .15s ease}
@@ -135,6 +149,12 @@ footer .contact a{margin-left:20px}
    To go live: drag this file onto  https://app.netlify.com/drop  (free, ~1 min)
 ======================================================================== -->
 
+<div class="sticky-head">
+<div class="topbar">
+  <span class="start">Classes start <b>28 July 2026</b></span>
+  <span class="cd" id="countdown" aria-live="polite"></span>
+</div>
+
 <nav class="nav">
   <div class="wrap">
     <svg class="logo" viewBox="0 0 540 150" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Summer AI Academy">
@@ -150,6 +170,7 @@ footer .contact a{margin-left:20px}
     <a class="btn btn-amber" href="https://selar.com/me870227c2">Reserve <span class="full">a spot</span></a>
   </div>
 </nav>
+</div>
 
 <header class="hero">
   <svg class="bg" viewBox="0 0 1200 600" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
@@ -373,6 +394,21 @@ footer .contact a{margin-left:20px}
 </footer>
 
 <script>
+// Countdown to the first day of classes — 28 July 2026
+const START=new Date('2026-07-28T00:00:00');
+const cd=document.getElementById('countdown');
+function tick(){
+  const diff=START-new Date();
+  if(diff<=0){cd.className='cd done';cd.textContent='Classes are in session';return;}
+  const d=Math.floor(diff/864e5),
+        h=Math.floor(diff/36e5)%24,
+        m=Math.floor(diff/6e4)%60,
+        s=Math.floor(diff/1e3)%60;
+  const u=(n,l)=>`<span class="unit"><span class="num">${n}</span><span class="lbl">${l}</span></span>`;
+  cd.innerHTML=u(d,'days')+u(h,'hrs')+u(m,'min')+u(s,'sec');
+}
+tick();setInterval(tick,1000);
+
 const io=new IntersectionObserver((es)=>{es.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('in'),Math.min(i*60,180));io.unobserve(e.target)}})},{threshold:.12});
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 </script>
